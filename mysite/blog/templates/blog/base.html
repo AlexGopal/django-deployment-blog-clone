@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- Medium Style Editor -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href= "{% static 'css/blog.css'%}">
+    <!-- look at hte directory tag and u see we have static -> css -> blog.css -->
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Russo+One&display=swap" rel="stylesheet">
+    
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+
+</head>
+<body class = "loader">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-sm bg-light techfont custom-navbar">
+        <div class = "container">
+            <div class="navbar-nav align-items-center">
+                <li class = "navbar-brand bigbrand"><a href="{% url 'post_list' %}">My Blog</a></li>
+                <ul class ="navbar-nav">
+                    <li class = "nav-item nav-link"><a href="{% url 'about' %}">About</a></li>
+                    <li class = "nav-item nav-link"><a href="https://www.github.com">Github</a></li>
+                    <li class = "nav-item nav-link"><a href="https://www.linkedin.com">LinkedIn</a></li>
+                </ul>
+            </div>
+            <!-- 17:20 everything to the right is for if the user is logged in -->
+            <ul class = "navbar-nav">
+                <div class="navbar-nav align-items-center ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class = "nav-item nav-link"><a href="{% url 'post_new' %}">New Post</a></li>
+                        <li class = "nav-item nav-link"><a href="{% url 'post_draft_list' %}">Drafts</a></li>
+                        <li class = "nav-item nav-link"><a href="{% url 'logout' %}">Log Out</a></li>
+                        <li class = "nav-item nav-link"><a>Welcome: {{ user.username }}</a></li>
+                    {% else %}
+                        <li class = 'navbar-nav-right nav-link'><a href="{% url 'login' %}"><span class = 'glyphicon glyphicon-user'></span></a></li>
+                        <!-- a gylphicon is just a little icon that comes with bootstrap
+                        to use it you need to wrap it in a span class -->
+                    {% endif %}
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENT BLOCK -->
+    <div class = "content container">
+        <!-- 21:00 this is where you could start adding rows/multiple rows if you wanted things to collapse
+        to be readable on mobile -->
+        <!-- 22:22 can basically add in a bunch of divs that refers to bootstrap's ability to collapse things
+        correctly to whatever grid system you work with -->
+        <div class = "row">
+            <div class = "col-md-8">
+                <div class = "blog_posts">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# SCRIPTS#}
+    <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
+    
+</body>
+</html>

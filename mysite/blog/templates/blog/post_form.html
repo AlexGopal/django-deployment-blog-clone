@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1>New Post</h1>
+    <form class = "post-form" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <!-- 1:40 back in the form page we had the widget attribute that allows us to add classes to individual elements
+        so incase we never need to use post-form  we have classes set up to grab particular elements or widgets
+        from that form -->
+        <button type="submit" class = "save btn btn-default">Save</button>
+        <!-- 2:40 again why we add css classes to things that we may not use -->
+    </form>
+
+    <script>var editor = new MediumEditor('.editable');</script>
+    <!-- 3:30 the .editable class is attached to the form.as_p as a widget -->
+    <!-- go back to forms.py and look at the following code, this is how it is attached  -->
+    <!--  'title':forms.TextInput(attrs={'class':'textinputclass'}),
+          'text':forms.Textarea(attrs = {'class':'editable medium-editor-textarea postcontent '}) -->
+    <!-- its that code in forms.py that helps us link when we're working with the post_form.html page -->
+{% endblock %}

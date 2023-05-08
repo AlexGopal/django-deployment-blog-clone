@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="jumbotron">
+<!-- <div class="mt-4 p-5 bg-primary text-white rounded"></div> -->
+    <h2>Please Login:</h2>
+    <h3>(Must be SuperUser, please check with the site admin)</h3>
+
+    <!-- 3:40 if our form has any errors it basically means there wasn't a match
+    between the username and the password -->
+    {% if form.errors %}
+        <p>Your username and password didn't match! Please try again.</p>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class = 'btn btn-primary'  value="Login">
+        <input type="hidden" name="next" value = "{{ next }}">
+        <!-- 6:10 the last line has to do with the mysite urls.py 
+        where the views.login will supply the next value for us which will
+        allow us to deal with what to do next after the person is logged in -->
+    </form>
+    <!-- 4:20 since in our urls.py file in mysite tells everything to go to
+    urls.py in blog we dont need to add blog:'login' to the {% url 'login' %}
+    there are no templates at the site level, everything goes to blog -->
+</div>
+{% endblock %}
